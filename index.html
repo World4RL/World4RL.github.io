@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <!-- TODO: Replace with your paper title and author names -->
+  <meta name="title" content="World4RL: Diffusion World Models for Policy Refinement with Reinforcement Learning for Robotic Manipulation">
+  <!-- TODO: Write a compelling 150-160 character description of your research -->
+  <meta name="description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <!-- TODO: Add 5-10 relevant keywords for your research area -->
+  <!-- <meta name="keywords" content="KEYWORD1, KEYWORD2, KEYWORD3, machine learning, computer vision, AI"> -->
+  <!-- TODO: List all authors -->
+  <meta name="author" content="Zhennan Jiang, Zhennan Jiang$^{1,2,3*}$, Kai Liu$^{1,2*}$, Yuxin Qin$^{1,2}$, Shuai Tian$^{1,2}$, Yupeng Zheng$^{1,2}$">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <!-- TODO: Replace with your institution or lab name -->
+  <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME">
+  <!-- TODO: Same as paper title above -->
+  <meta property="og:title" content="PAPER_TITLE">
+  <!-- TODO: Same as description above -->
+  <meta property="og:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <!-- TODO: Replace with your actual website URL -->
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- TODO: Replace with your lab/institution Twitter handle -->
+  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
+  <!-- TODO: Replace with first author's Twitter handle -->
+  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
+  <!-- TODO: Same as paper title above -->
+  <meta name="twitter:title" content="PAPER_TITLE">
+  <!-- TODO: Same as description above -->
+  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <!-- TODO: Same as social preview image above -->
+  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="PAPER_TITLE">
+  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
+  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <!-- TODO: Replace with your paper title and authors -->
+  <title>PAPER_TITLE - AUTHOR_NAMES | Academic Research</title>
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "PAPER_TITLE",
+    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "FIRST_AUTHOR_NAME",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "INSTITUTION_NAME"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "SECOND_AUTHOR_NAME",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "INSTITUTION_NAME"
+        }
+      }
+    ],
+    "datePublished": "2024-01-01",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CONFERENCE_OR_JOURNAL_NAME"
+    },
+    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
+    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
+    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
+    "abstract": "FULL_ABSTRACT_TEXT_HERE",
+    "citation": "BIBTEX_CITATION_HERE",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
+    },
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "RESEARCH_AREA_1"
+      },
+      {
+        "@type": "Thing", 
+        "name": "RESEARCH_AREA_2"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "INSTITUTION_OR_LAB_NAME",
+    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
+    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
+    "sameAs": [
+      "https://twitter.com/YOUR_TWITTER_HANDLE",
+      "https://github.com/YOUR_GITHUB_USERNAME"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works Dropdown -->
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>More Works from Our Lab</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="works-list">
+        <!-- TODO: Replace with your lab's related works -->
+        <a href="https://arxiv.org/abs/PAPER_ID_1" class="work-item" target="_blank">
+          <div class="work-info">
+            <!-- TODO: Replace with actual paper title -->
+            <h5>Paper Title 1</h5>
+            <!-- TODO: Replace with brief description -->
+            <p>Brief description of the work and its main contribution.</p>
+            <!-- TODO: Replace with venue and year -->
+            <span class="work-venue">Conference/Journal 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <!-- TODO: Add more related works or remove extra items -->
+        <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 2</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2023</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 3</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2023</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- TODO: Replace with your paper title -->
+            <h1 class="title is-2 publication-title">World4RL: Diffusion World Models for Policy Refinement with Reinforcement Learning for Robotic Manipulation</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- TODO: Replace with your paper authors and their personal links -->
+              <span class="author-block">
+                <a href="https://jzndd.github.io/" target="_blank">Zhennan Jiang</a><sup>1,2,3*</sup>,</span>
+                <span class="author-block">
+                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Kai Liu</a><sup>1,2*</sup>,</span>
+                  <span class="author-block">
+                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Yuxin Qin</a><sup>1,2</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Shuai Tian</a><sup>1,2</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Yupeng Zheng</a><sup>1,2</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Mingcai Zhou</a><sup>4</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://nicsefc.ee.tsinghua.edu.cn/people/ChaoYu" target="_blank">Chao Yu</a><sup>3,5</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://ia.cas.cn/rcdw/fyjy/202404/t20240422_7129926.html" target="_blank">Haoran Li</a><sup>1,2†</sup>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://ia.cas.cn/rcdw/yjy/202404/t20240422_7129930.html" target="_blank">Dongbin Zhao</a><sup>1,2</sup>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <!-- TODO: Replace with your institution and conference/journal info -->
+                    <span class="author-block">
+                      <small>
+                      <sup>1</sup>SKL-MAIS, Institute of Automation, Chinese Academy of Sciences<br>
+                      <sup>2</sup>School of Artificial Intelligence, University of Chinese Academy of Sciences<br>
+                      <sup>3</sup>Zhongguancun Academy<br>
+                      <sup>4</sup>Beijing Zhongke Huiling Robot Technology Co<br>
+                      <sup>5</sup>Department of Electronic Engineering, Tsinghua University<br>
+                      </small>
+                    </span>
+                    <!-- TODO: Remove this line if no equal contribution -->
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution, <sup>†</sup>Indicates Corresponding Author</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- TODO: Update with your arXiv paper ID -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- TODO: Add your supplementary material PDF or remove this section -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- TODO: Replace with your GitHub repository URL -->
+                  <!-- <span class="link-block">
+                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span> -->
+
+                <!-- TODO: Update with your arXiv paper ID -->
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a> -->
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser video-->
+<!--
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
+        <source src="static/videos/banner_video.mp4" type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
+      </h2>
+    </div>
+  </div>
+</section>
+-->
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <!-- TODO: Replace with your paper abstract -->
+          <p>
+            Robotic manipulation policies are commonly initialized through imitation learning, but their performance is limited by the scarcity and narrow coverage of expert data. Reinforcement learning can refine polices to alleviate this limitation, yet real-robot training is costly and unsafe, while training in simulators suffers from the sim-to-real gap. Recent advances in generative models have demonstrated remarkable capabilities in real-world simulation, with diffusion models in particular excelling at generation. This raises the question of how diffusion model-based world models can be combined to enhance pre-trained policies in robotic manipulation. In this work, we propose World4RL, a framework that employs diffusion-based world models as high-fidelity simulators to refine pre-trained policies entirely in imagined environments for robotic manipulation. Unlike prior works that primarily employ world models for planning, our framework enables direct end-to-end policy optimization. World4RL is designed around two principles: pre-training a diffusion world model that captures diverse dynamics on multi-task datasets and refining policies entirely within a frozen world model to avoid online real-world interactions. We further design a two-hot action encoding scheme tailored for robotic manipulation and adopt diffusion backbones to improve modeling fidelity. Extensive simulation and real-world experiments demonstrate that World4RL provides high-fidelity environment modeling and enables consistent policy refinement, yielding significantly higher success rates compared to imitation learning and other baselines.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Method section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3  has-text-centered">Method</h2>
+        <h3 class="title is-4">World4RL Framework Overview</h3>
+        <div class="content has-text-justified">
+          <p>
+            World4RL consists of two stages: pre-training and policy optimization. In the pre-training stage, the diffusion transition model is trained on task-agnostic data to generalize across diverse dynamics, the reward classifier is trained on task-specific data annotated with binary success labels, and the policy is trained via imitation learning to provide a stable initialization. In the policy optimization stage, the pre-trained world model is frozen and used as a simulator, while the policy is refined with PPO under sparse rewards through imagined rollouts. This design improves both sample efficiency and safety, while enabling consistent gains over the initial gaussian policy.
+          </p>
+          
+          <!-- Framework Image -->
+          <div style="margin: 2rem 0; overflow: visible;">
+            <img src="static/images/framework.png" alt="World4RL Framework Overview" style="width: 140%; max-width: none; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-left: -20%;">
+            <p class="has-text-grey subtitle item has-text-centered">
+              Figure 1: World4RL Framework Overview.
+            </p>
+          </div>
+          
+          <h3 class="title is-4">Design of Diffusion Transition Model</h3>
+          <!-- <h4 class="title is-5">Two hot action encoding</h4> -->
+          <p>
+            For each action dimension <span><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>a</mi><mi>i</mi></msub><mo>∈</mo><mrow><mi mathvariant="double-struck">R</mi></mrow></math></span>, given bin values <span><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi data-mjx-variant="-tex-calligraphic" mathvariant="script">B</mi></mrow><mo>=</mo><mo fence="false" stretchy="false">{</mo><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>b</mi><mi>K</mi></msub><mo fence="false" stretchy="false">}</mo></math> </span>, we map <span><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>a</mi><mi>i</mi></msub></math></span> to its two nearest bins:
+            
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable displaystyle="true" columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" rowspacing="3pt"><mtr><mtd></mtd><mtd><msub><mrow><mi mathvariant="bold">t</mi></mrow><mi>i</mi></msub><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo>=</mo><mfrac><mrow><msub><mi>b</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><mrow><msub><mi>b</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>b</mi><mi>k</mi></msub></mrow></mfrac><mo>,</mo><mstyle scriptlevel="0"><mspace width="1em"></mspace></mstyle><msub><mrow><mi mathvariant="bold">t</mi></mrow><mi>i</mi></msub><mo stretchy="false">[</mo><mi>k</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo><mo>=</mo><mfrac><mrow><msub><mi>a</mi><mi>i</mi></msub><mo>−</mo><msub><mi>b</mi><mi>k</mi></msub></mrow><mrow><msub><mi>b</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>b</mi><mi>k</mi></msub></mrow></mfrac><mo>,</mo></mtd></mtr></mtable></math>
+            
+            with <span><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">  <munder>    <mo data-mjx-texclass="OP">&#x2211;</mo>    <mi>j</mi>  </munder>  <msub>    <mrow>      <mi mathvariant="bold">t</mi>    </mrow>    <mi>i</mi>  </msub>  <mo stretchy="false">[</mo>  <mi>j</mi>  <mo stretchy="false">]</mo>  <mo>=</mo>  <mn>1</mn></math></span> and <span><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>b</mi><mi>k</mi></msub><mo>≤</mo><msub><mi>a</mi><mi>i</mi></msub><mo>≤</mo><msub><mi>b</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub></math></span>, where <span><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mrow><mi mathvariant="bold">t</mi></mrow><mi>i</mi></msub><mo>∈</mo><msup><mrow><mi mathvariant="double-struck">R</mi></mrow><mi>K</mi></msup></math></span> denotes the two-hot weight vector for the i-th action dimension.
+          </p>
+
+          <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+          <p>
+          For example, suppose the action is \(a_i=0.14\), the action range is \([0,1]\), and we use \(K=10\) uniform bins 
+          \(B=\{0.0, 0.1, \ldots, 1.0\}\). The two nearest bin edges are \(b_k=0.1\) and \(b_{k+1}=0.2\).
+          </p>
+
+          <p>
+          A one-hot encoding chooses the closer bin (0.1), producing:
+          <code>[0, 1, 0, 0, 0, 0, 0, 0, 0, 0]</code>.
+          </p>
+
+          <p>
+          In contrast, the two-hot encoding linearly interpolates between the two neighbors:
+          \[
+          t_i[k]   = \frac{b_{k+1}-a_i}{b_{k+1}-b_k} = \frac{0.2-0.14}{0.1} = 0.6,\qquad
+          t_i[k+1] = \frac{a_i-b_k}{b_{k+1}-b_k} = \frac{0.14-0.1}{0.1} = 0.4.
+          \]
+          This yields:
+          <code>[0, 0.6, 0.4, 0, 0, 0, 0, 0, 0, 0]</code>.
+          </p>
+
+          <p>
+            Thereby, two-hot encoding provides a lossless and differentiable representation that better handles continuous action inputs in robotic manipulation tasks.
+          </p>
+
+           <!-- <h4 class="title is-5">Architecture of Diffusion Transition Model</h4> -->
+           <p>
+             Based on this, the diffusion transition model \(D_{\theta}\) is designed to 
+             <strong>predict the next observation</strong> through a denoising process 
+             conditioned on historical observations \(x^{0}_{t-T:t}\) and encoded actions \(z_{t-T:t}\).
+           </p>
+
+           <!-- Diffusion Video -->
+           <div style="margin: 2rem 0; text-align: center;">
+             <video controls autoplay muted loop style="width: 80%; max-width: 800px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+               <source src="static/videos/diffusion.mp4" type="video/mp4">
+             </video>
+             <p class="has-text-grey subtitle item has-text-centered" style="margin-top: 0.5rem;">
+               Video: Diffusion Transition Model Architecture
+             </p>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End method section -->
+
+<!-- Experiments Results section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Experiments Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            In experiment, We evaluated World4RL on video generation and policy execution in simulation  and on a real Franka robot.
+          </p>
+          
+          <h3 class="title is-4">Simulated Robotic Manipulation Environments</h3>
+          <p>
+            The following quantitative evaluation and video rollout results consistently demonstrate the superiority of diffusion-based architectures in preserving temporal consistency and visual fidelity.
+          </p>
+          
+          <!-- Results Images -->
+          <div style="margin: 2rem 0;">
+            <div class="columns is-centered">
+              <div class="column">
+                <img src="static/images/exp1_quantitative.png" alt="Simulation Results 2" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+                  Quantitative results on video prediction. “ST” denotes single-task training.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Results Videos -->
+          <div style="margin: 2rem 0;">
+            <div class="columns is-centered">
+              <div class="column">
+              <video controls muted loop style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <source src="static/videos/exp1.mp4" type="video/mp4">
+              </video>
+
+              <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+                Visualization of predicted rollouts on the coffee-pull task. The ground-truth (GT) trajectory reflects a failed execution. World4RL successfully captures this failure trajectory, whereas all baseline models fail to do so.
+              </p>
+              <!-- <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+                Visualization of predicted rollouts on the coffee-pull task. The ground-truth (GT) trajectory reflects a failed execution. World4RL successfully captures this failure trajectory, whereas all baseline models fail to do so.
+              </p> -->
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="title is-4">Simulation Performance</h2>
+          <p>
+            In simulation experiments, with policy refinement, we see a significant improvement over the pre-trained policy, achieving a 67.5% success rate across six Meta-World tasks, and further surpassing imitation learning, offline RL, and planning methods.
+          </p>
+    
+          <!-- Results Images -->
+          <div style="margin: 2rem 0;">
+            <div class="columns is-centered">
+              <div class="column">
+                <img src="static/images/exp2_SR.png" alt="Simulation Results 2" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+                  Success rate of different methods on Meta-World benchmark. The notation ↑n indicates the absolute
+                  improvement over pre-trained gaussian policy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+
+          
+          <p>
+            World4RL also achieves comparable performance with only expert and policy rollout data, while RLPD and Uni-O4 require 346k and 470k online steps, respectively, to reach the same level. This demonstrates the strong sample efficiency of World4RL, making it particularly suitable for real-robot deployment where online interaction is expensive and limited.
+          </p>
+
+          <!-- Results Images -->
+          <div style="margin: 2rem 0;">
+            <div class="columns is-centered">
+              <div class="column has-text-centered">
+                <img src="static/images/exp2_sample.png" alt="Simulation Results 2" style="width: 70%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+                  Comparison of online sample efficiency.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ----------------------------------------- EXP3 ----------------------------------------- -->
+          
+
+          <h3 class="title is-4">Real-World Performance</h3>
+
+          <p>
+            On real-world tasks, World4RL reachs 93.3% success, significantly outperforming diffusion policies and the pre-trained gaussian policy.
+          </p>
+
+          <!-- Results Images -->
+          <div style="margin: 2rem 0;">
+            <div class="columns is-centered">
+              <div class="column">
+                <img src="static/images/exp3_SR.png" alt="Simulation Results 2" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+                  Success rate of different methods on real-world tasks.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Beyond achieving higher success rates, we also observe that policies fine-tuned with World4RL tend to execute tasks more decisively, quickly and accurately. For example, in the put bread in task, the fine-tuned policy promptly performs the grasping and placing actions, whereas gaussian policy and diffusion policy often show hesitation or linger in intermediate states without committing to task completion.
+          </p>
+
+          <!-- Task Comparison Table -->
+          <div style="position: relative; overflow-x: visible;">
+            <!-- <h4 class="title is-5">Task Performance Comparison</h4> -->
+            <!-- 关键：把宽度设为 150%，再用自身居中，让多出的部分均匀分布到两侧 -->
+            <div style="width: 150%; position: relative; left: 50%; transform: translateX(-50%);">
+              <table class="table is-bordered is-striped" style="width: 100%; table-layout: fixed;">
+                <!-- 用 colgroup 精准分配列宽：相对于 150% 的表格宽度 -->
+                <colgroup>
+                  <col style="width: 30%;">
+                  <col style="width: 40%;">
+                  <col style="width: 40%;">
+                  <col style="width: 40%;">
+                </colgroup>
+            <!-- <h4 class="title is-5">Task Performance Comparison</h4>
+            <div class="table-container" style="display: flex; justify-content: center;">
+              <table class="table is-bordered is-striped" style="width: 150%;"> -->
+                <thead>
+                  <tr>
+                    <th style="text-align: center; vertical-align: middle; width: 30%;">TASK Name</th>
+                    <th style="text-align: center; vertical-align: middle; width: 40%;">Pre-trained Policy<br>(Gaussian Policy)</th>
+                    <th style="text-align: center; vertical-align: middle; width: 40%;">DP</th>
+                    <th style="text-align: center; vertical-align: middle; width: 40%;">World4RL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle; font-weight: bold;">pick apple</td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/apple/bc.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;"> 
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/apple/dp.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/apple/ppo_ft.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle; font-weight: bold;">push button</td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/button/bc.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/button/dp.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/button/ppo_ft.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle; font-weight: bold;">put bread in</td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/bread_in/bc.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/bread_in/dp.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/bread_in/ppo_ft.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle; font-weight: bold;">put bread out</td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/bread_out/bc.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/bread_out/dp.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/bread_out/ppo_ft.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle; font-weight: bold;">pull coffee</td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/open_drawer/bc.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/open_drawer/dp.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/open_drawer/ppo_ft.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center; vertical-align: middle; font-weight: bold;">close drawer</td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/close_drawer/bc.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/close_drawer/dp.mp4" type="video/mp4">
+                      </video>  
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; width: 40%; height: 200px;">
+                      <video controls muted loop style="width: 100%; height: 100%; border-radius: 4px; object-fit: cover;">
+                        <source src="static/videos/single_videos/close_drawer/ppo_ft.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p class="has-text-grey subtitle has-text-centered" style="margin-top: 0.5rem;">
+            Visualization of real-world performance.
+          </p>
+
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End experiments results section -->
+
+<!-- Image carousel -->
+ <!--
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <img src="static/images/carousel1.jpg" alt="First research result visualization" loading="lazy"/>
+        <h2 class="subtitle has-text-centered">
+          First image description.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/carousel2.jpg" alt="Second research result visualization" loading="lazy"/>
+        <h2 class="subtitle has-text-centered">
+          Second image description.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/carousel3.jpg" alt="Third research result visualization" loading="lazy"/>
+        <h2 class="subtitle has-text-centered">
+         Third image description.
+       </h2>
+     </div>
+     <div class="item">
+      <img src="static/images/carousel4.jpg" alt="Fourth research result visualization" loading="lazy"/>
+      <h2 class="subtitle has-text-centered">
+        Fourth image description.
+      </h2>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+-->
+<!-- End image carousel -->
+
+
+
+
+<!-- Youtube video -->
+<!--
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Video Presentation</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+<!-- End youtube video -->
+
+
+<!-- Video carousel -->
+<!--
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Another Carousel</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-video1"
+          <video poster="" id="video1" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video2">
+          <video poster="" id="video2" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video3">
+          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel3.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+<!-- End video carousel -->
+
+
+
+
+
+
+<!-- Paper poster -->
+<!--
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Poster</h2>
+
+      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
+          </iframe>
+        
+      </div>
+    </div>
+  </section>
+-->
+<!--End paper poster -->
+
+
+
+<!--BibTex citation -->
+<!--
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
+  title={Your Paper Title Here},
+  author={First Author and Second Author and Third Author},
+  journal={Conference/Journal Name},
+  year={2024},
+  url={https://your-domain.com/your-project-page}
+}</code></pre>
+    </div>
+</section>
+-->
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
