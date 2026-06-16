@@ -365,7 +365,7 @@
         <h3 class="title is-4">World4RL Framework Overview</h3>
         <div class="content has-text-justified">
           <p>
-            World4RL consists of two stages: pre-training and policy optimization. In the pre-training stage, the diffusion transition model is trained on task-agnostic data to generalize across diverse dynamics, the reward classifier is trained on task-specific data annotated with binary success labels, and the policy is trained via imitation learning to provide a stable initialization. In the policy optimization stage, the pre-trained world model is frozen and used as a simulator, while the policy is refined with PPO under sparse rewards through imagined rollouts. This design improves both sample efficiency and safety, while enabling consistent gains over the initial gaussian policy.
+            World4RL consists of two stages: pre-training and policy optimization. In the pre-training stage, the diffusion transition model is trained on task-agnostic data to generalize across diverse dynamics, the reward classifier is trained on task-specific data annotated with binary success labels, and the policy is trained via imitation learning to provide a stable initialization. The reward classifier is trained not only on expert demonstrations, but also on policy-rollout observations, exposing it to intermediate, near-success, and failure states that the optimized policy is likely to visit. In the policy optimization stage, the pre-trained world model is frozen and used as a simulator, while the policy is refined with PPO under sparse rewards through imagined rollouts. This design improves both sample efficiency and safety, while enabling consistent gains over the initial gaussian policy.
           </p>
           
           <!-- Framework Image -->
@@ -692,6 +692,68 @@
   </div>
 </section>
 <!-- End experiments results section -->
+
+<!-- More Analyse section -->
+<section class="section hero" id="more-analyse">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">More Analyse</h2>
+        <h3 class="title is-4">Reward Classifier Reliability</h3>
+        <div class="content has-text-justified">
+          <p>
+            The reward classifier provides sparse success signals for PPO inside the frozen world model.
+            To reduce reward hacking, it is trained with policy-rollout observations in addition to expert demonstrations,
+            so it sees many states that the policy actually visits during refinement, including intermediate,
+            near-success, and failure cases.
+          </p>
+          <p>
+            Many classifier errors near task completion are benign for policy optimization. For example, in drawer-opening
+            tasks, a nearly opened drawer can be visually close to a successful state; this boundary effect is even more
+            visible in simulation when the reward signal uses a strict success criterion. Such near-success boundary errors
+            typically preserve the correct optimization direction because the policy continues to execute actions that move
+            the system further into the success region. The more harmful failure mode is assigning success to observations
+            that are far from any valid completion state.
+          </p>
+
+          <div class="table-container" style="margin-top: 1.5rem;">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Evaluation setting</th>
+                  <th style="text-align: center;">Accuracy</th>
+                  <th style="text-align: center;">F1</th>
+                  <th>Observation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Held-out simulation test set (hammer-v2)</td>
+                  <td style="text-align: center;">94.4%</td>
+                  <td style="text-align: center;">84.6%</td>
+                  <td>Held-out simulation observations with strict success labels.</td>
+                </tr>
+                <tr>
+                  <td>Held-out real-world test set (open-drawer)</td>
+                  <td style="text-align: center;">98.7%</td>
+                  <td style="text-align: center;">92.6%</td>
+                  <td>Real task observations not used for training.</td>
+                </tr>
+                <tr>
+                  <td>500 OOD real-world failure frames</td>
+                  <td style="text-align: center;">100%</td>
+                  <td style="text-align: center;">N/A</td>
+                  <td>All 500 all-negative frames are predicted as failure, showing that obvious failure states are not assigned spurious rewards.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End More Analyse section -->
 
 <!-- Image carousel -->
  <!--
