@@ -760,7 +760,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">More details</h2>
+        <h2 class="title is-3 has-text-centered">More Details</h2>
         <h3 class="title is-4">Behavior-Cloning Policy Implementation</h3>
         <div class="content has-text-justified">
           <p>
@@ -816,6 +816,62 @@
                 <tr>
                   <td>Action normalization</td>
                   <td>Continuous actions normalized and clipped to [-1, 1] per dimension</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="title is-4" style="margin-top: 2.5rem;">Computational Cost and Imagined-Sample Budget</h3>
+          <p>
+            The diffusion world model is trained once and then frozen. During policy refinement, imagined rollouts
+            are generated in batches on GPU; the current implementation reaches an average throughput of
+            13.6 generated transitions per second.
+          </p>
+
+          <div class="table-container" style="margin-top: 1.5rem;">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>World-model pre-training hardware</td>
+                  <td>4 NVIDIA A800 GPUs, 40GB</td>
+                </tr>
+                <tr>
+                  <td>World-model pre-training time</td>
+                  <td>About 20 hours</td>
+                </tr>
+                <tr>
+                  <td>Policy refinement hardware</td>
+                  <td>1 NVIDIA A800 GPU, 40GB</td>
+                </tr>
+                <tr>
+                  <td>Policy refinement time per task</td>
+                  <td>About 6 hours</td>
+                </tr>
+                <tr>
+                  <td>Diffusion denoising steps per transition</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <td>Average generated transitions per second</td>
+                  <td>13.6 transitions/s</td>
+                </tr>
+                <tr>
+                  <td>Imagined transitions per task</td>
+                  <td>1.92M state-action-next-state transitions (about 2M)</td>
+                </tr>
+                <tr>
+                  <td>PPO rollout/update budget</td>
+                  <td>64 initial states x 15 rollout steps; 2,000 actor updates</td>
+                </tr>
+                <tr>
+                  <td>PPO mini-batch / epochs</td>
+                  <td>Mini-batch size 64; 6 PPO epochs per update</td>
                 </tr>
               </tbody>
             </table>
