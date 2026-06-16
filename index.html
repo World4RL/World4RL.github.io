@@ -755,6 +755,78 @@
 </section>
 <!-- End More Analyse section -->
 
+<!-- More details section -->
+<section class="section hero" id="more-details">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">More details</h2>
+        <h3 class="title is-4">Behavior-Cloning Policy Implementation</h3>
+        <div class="content has-text-justified">
+          <p>
+            The initial policy used by World4RL is trained with behavior cloning and then used as the
+            initialization for PPO refinement inside the frozen learned world model.
+          </p>
+
+          <div class="table-container" style="margin-top: 1.5rem;">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Configuration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Policy type</td>
+                  <td>Stochastic Gaussian policy</td>
+                </tr>
+                <tr>
+                  <td>Visual input</td>
+                  <td>64 x 64 x 3 RGB image, single corner camera, frame stack = 1</td>
+                </tr>
+                <tr>
+                  <td>Visual encoder</td>
+                  <td>4-layer CNN with 32 channels, 3 x 3 kernels, strides (2, 1, 1, 1), and ReLU activations</td>
+                </tr>
+                <tr>
+                  <td>Policy head</td>
+                  <td>MLP mean head with a learned diagonal log-standard-deviation parameter</td>
+                </tr>
+                <tr>
+                  <td>BC objective</td>
+                  <td>Negative log-likelihood of expert actions</td>
+                </tr>
+                <tr>
+                  <td>Optimizer</td>
+                  <td>Adam, with separate optimizers for the visual encoder and actor</td>
+                </tr>
+                <tr>
+                  <td>Learning rate</td>
+                  <td>3e-4 for both encoder and actor during BC warmup</td>
+                </tr>
+                <tr>
+                  <td>Batch size</td>
+                  <td>256 transitions</td>
+                </tr>
+                <tr>
+                  <td>Training budget</td>
+                  <td>20,000 actor BC update steps</td>
+                </tr>
+                <tr>
+                  <td>Action normalization</td>
+                  <td>Continuous actions normalized and clipped to [-1, 1] per dimension</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End More details section -->
+
 <!-- Image carousel -->
  <!--
 <section class="hero is-small">
