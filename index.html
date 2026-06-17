@@ -867,6 +867,7 @@
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
     </div>
@@ -991,6 +992,76 @@
                 <tr>
                   <td>PPO mini-batch / epochs</td>
                   <td>Mini-batch size 64; 6 PPO epochs per update</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="title is-4" style="margin-top: 2.5rem;">Baseline Implementation Details</h3>
+          <p>
+            All baselines are evaluated in the fixed-dataset setting. Entries marked in red are remaining
+            bookkeeping fields that cannot be uniquely determined from the current implementation or the
+            official repositories.
+          </p>
+
+          <div class="table-container" style="margin-top: 1.5rem;">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Training data</th>
+                  <th>Key settings</th>
+                  <th>Tuning / selection protocol</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>BC</td>
+                  <td>50 expert demonstrations</td>
+                  <td>20,000 actor BC update steps; batch size 256; Adam with learning rate 3e-4.</td>
+                  <td>Fixed setting used for all tasks; checkpoint selected by validation success rate when available.</td>
+                </tr>
+                <tr>
+                  <td>Diffusion Policy</td>
+                  <td>50 expert demonstrations</td>
+                  <td>Official image-policy setting: observation horizon 2, prediction horizon 16, action horizon 8, DDPM denoising steps 100, AdamW learning rate 1e-4, batch size 64, 8,000 epochs.</td>
+                  <td>Official/default Diffusion Policy configuration; final checkpoint selected by validation success rate.</td>
+                </tr>
+                <tr>
+                  <td>TD3+BC</td>
+                  <td>50 expert demonstrations + 150 BC-policy rollouts</td>
+                  <td>CORL/official TD3+BC defaults: actor/critic learning rate 3e-4, batch size 256, discount 0.99, target-update rate tau = 0.005, target policy noise 0.2, noise clip 0.5, delayed policy update frequency 2, BC weight alpha = 2.5, 1M gradient steps.</td>
+                  <td>Fixed CORL/default hyperparameters; no extra online interaction; <span style="color: #d7191c;">TODO: alpha search range if tuned.</span></td>
+                </tr>
+                <tr>
+                  <td>IQL</td>
+                  <td>50 expert demonstrations + 150 BC-policy rollouts</td>
+                  <td>CORL/default IQL settings: actor/critic/value learning rates 3e-4, batch size 256, discount 0.99, target-update rate tau = 0.005, expectile 0.7, inverse temperature 3.0, 1M gradient steps.</td>
+                  <td>Fixed CORL/default hyperparameters; no extra online interaction; <span style="color: #d7191c;">TODO: expectile/temperature search range if tuned.</span></td>
+                </tr>
+                <tr>
+                  <td>IRASim</td>
+                  <td>230 trajectories per task: 50 expert + 150 BC-policy + 30 random</td>
+                  <td>Action-conditioned generative simulator used for test-time trajectory sampling; candidate trajectories are scored by the learned reward classifier and the first action of the best-scoring trajectory is executed; <span style="color: #d7191c;">TODO: planning horizon and number of candidate trajectories.</span></td>
+                  <td>Same offline data as World4RL; planning hyperparameters selected without extra online training; <span style="color: #d7191c;">TODO: final candidate-count sweep if used.</span></td>
+                </tr>
+                <tr>
+                  <td>DiWA</td>
+                  <td>230 trajectories per task: 50 expert + 150 BC-policy + 30 random</td>
+                  <td>Official DiWA uses a DreamerV2/RSSM world model for policy adaptation; trained in the same fixed-dataset setting; <span style="color: #d7191c;">TODO: RSSM latent dimension, rollout horizon, optimizer settings, and training steps used in our adaptation.</span></td>
+                  <td>Same offline data as World4RL; original/default DiWA setting where applicable; <span style="color: #d7191c;">TODO: validation-tuning protocol if modified.</span></td>
+                </tr>
+                <tr>
+                  <td>TD-MPC2</td>
+                  <td>230 trajectories per task: 50 expert + 150 BC-policy + 30 random</td>
+                  <td>Official TD-MPC2 defaults: latent dimension 512, model rollout horizon 3, MPPI planning with 512 candidates, 64 elites, 6 iterations, 24 policy trajectories, Adam learning rate 3e-4, batch size 256, 10M training steps.</td>
+                  <td>Same offline data as World4RL; adapted to offline world-model learning without extra online interaction; <span style="color: #d7191c;">TODO: final offline validation protocol.</span></td>
+                </tr>
+                <tr>
+                  <td>World4RL</td>
+                  <td>230 trajectories per task: 50 expert + 150 BC-policy + 30 random</td>
+                  <td>PPO actor/encoder learning rate 1e-6, rollout horizon 15, batch size 64 initial states, mini-batch size 64, 6 PPO epochs, 2,000 actor updates, log-std upper clip -2 (std <= exp(-2)).</td>
+                  <td>Same fixed setting used for all reported tasks; no extra online environment interaction during policy refinement.</td>
                 </tr>
               </tbody>
             </table>
