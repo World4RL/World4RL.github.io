@@ -347,7 +347,7 @@
         <div class="content has-text-justified">
           <!-- TODO: Replace with your paper abstract -->
           <p>
-            Robotic manipulation policies are commonly initialized through imitation learning, but their performance is limited by the scarcity and narrow coverage of expert data. Reinforcement learning can refine polices to alleviate this limitation, yet real-robot training is costly and unsafe, while training in simulators suffers from the sim-to-real gap. Recent advances in generative models have demonstrated remarkable capabilities in real-world simulation, with diffusion models in particular excelling at generation. This raises the question of how diffusion model-based world models can be combined to enhance pre-trained policies in robotic manipulation. In this work, we propose World4RL, a framework that employs diffusion-based world models as high-fidelity simulators to refine pre-trained policies entirely in imagined environments for robotic manipulation. Unlike prior works that primarily employ world models for planning, our framework enables direct end-to-end policy optimization. World4RL is designed around two principles: pre-training a diffusion world model that captures diverse dynamics on multi-task datasets and refining policies entirely within a frozen world model to avoid online real-world interactions. We further design a two-hot action encoding scheme tailored for robotic manipulation and adopt diffusion backbones to improve modeling fidelity. Extensive simulation and real-world experiments demonstrate that World4RL provides high-fidelity environment modeling and enables consistent policy refinement, yielding significantly higher success rates compared to imitation learning and other baselines.
+            Robotic manipulation policies are commonly initialized through imitation learning, but their performance is limited by the scarcity and narrow coverage of expert data. Reinforcement learning can refine policies to alleviate this limitation, yet real-robot training is costly and unsafe, while training in simulators suffers from the sim-to-real gap. Recent advances in generative models have demonstrated remarkable capabilities in real-world simulation, with diffusion models in particular excelling at generation. This raises the question of how diffusion model-based world models can be combined to enhance pre-trained policies in robotic manipulation. In this work, we propose World4RL, a two-stage system-level framework for robotic manipulation that uses a frozen diffusion visual world model as an imagined environment for reinforcement-learning-based policy refinement. Unlike prior works that primarily employ world models for planning, our framework enables direct end-to-end policy optimization. World4RL is designed around two principles: pre-training a diffusion world model that captures diverse dynamics on multi-task datasets and refining policies entirely within a frozen world model to avoid online real-world interactions. World4RL further integrates action encoding design, high-fidelity diffusion backbones, data-coverage recipes, and conservative exploration principles into a system-level pipeline for stable policy refinement. Extensive simulation and real-world experiments demonstrate that World4RL provides high-fidelity environment modeling and enables consistent policy refinement, yielding significantly higher success rates compared to imitation learning and other baselines.
           </p>
         </div>
       </div>
@@ -365,7 +365,7 @@
         <h3 class="title is-4">World4RL Framework Overview</h3>
         <div class="content has-text-justified">
           <p>
-            World4RL consists of two stages: pre-training and policy optimization. In the pre-training stage, the diffusion transition model is trained on task-agnostic data to generalize across diverse dynamics, the reward classifier is trained on task-specific data annotated with binary success labels, and the policy is trained via imitation learning to provide a stable initialization. The reward classifier is trained not only on expert demonstrations, but also on policy-rollout observations, exposing it to intermediate, near-success, and failure states that the optimized policy is likely to visit. In the policy optimization stage, the pre-trained world model is frozen and used as a simulator, while the policy is refined with PPO under sparse rewards through imagined rollouts. This design improves both sample efficiency and safety, while enabling consistent gains over the initial gaussian policy.
+            World4RL consists of two stages: pre-training and policy optimization. In the pre-training stage, the diffusion transition model is trained on task-label-agnostic multi-task transition data, the reward classifier is trained on task-specific data annotated with binary success labels, and the policy is trained via imitation learning to provide a stable initialization. The reward classifier is trained not only on expert demonstrations, but also on policy-rollout observations, exposing it to intermediate, near-success, and failure states that the optimized policy is likely to visit. In the policy optimization stage, the pre-trained world model is frozen and used as an imagined environment, while the policy is refined with PPO under sparse rewards through imagined rollouts. This design improves both sample efficiency and safety, while enabling consistent gains over the initial Gaussian policy.
           </p>
           
           <!-- Framework Image -->
@@ -931,7 +931,7 @@
                 </tr>
                 <tr>
                   <td>Training budget</td>
-                  <td>20,000 actor BC update steps</td>
+                  <td>30,000 actor BC update steps; losses typically converge in the early stage</td>
                 </tr>
                 <tr>
                   <td>Action normalization</td>
@@ -941,11 +941,11 @@
             </table>
           </div>
 
-          <h3 class="title is-4" style="margin-top: 2.5rem;">Computational Cost and Imagined-Sample Budget</h3>
+          <h3 class="title is-4" style="margin-top: 2.5rem;">Computational Cost and World-Model Interaction Budget</h3>
           <p>
-            The diffusion world model is trained once and then frozen. During policy refinement, imagined rollouts
-            are generated in batches on GPU; the current implementation reaches an average throughput of
-            13.6 generated transitions per second.
+            The diffusion world model is trained once and then frozen. During policy refinement, each task uses
+            1M interactions with the frozen world model. Imagined rollouts are generated in batches on GPU, and the
+            current implementation reaches an average throughput of 13.6 generated transitions per second.
           </p>
 
           <div class="table-container" style="margin-top: 1.5rem;">
@@ -982,16 +982,16 @@
                   <td>13.6 transitions/s</td>
                 </tr>
                 <tr>
-                  <td>Imagined transitions per task</td>
-                  <td>1.92M state-action-next-state transitions (about 2M)</td>
+                  <td>World-model interactions per task</td>
+                  <td>1M state-action-next-state interactions</td>
                 </tr>
                 <tr>
-                  <td>PPO rollout/update budget</td>
-                  <td>64 initial states x 15 rollout steps; 2,000 actor updates</td>
+                  <td>PPO rollout batch</td>
+                  <td>64 initial states x 15 rollout steps</td>
                 </tr>
                 <tr>
                   <td>PPO mini-batch / epochs</td>
-                  <td>Mini-batch size 64; 6 PPO epochs per update</td>
+                  <td>Mini-batch size 64; 6 PPO epochs per rollout batch</td>
                 </tr>
               </tbody>
             </table>
@@ -1021,7 +1021,7 @@
                   <td>BC</td>
                   <td>50 expert demonstrations</td>
                   <td>Batch size 256; Adam with learning rate 3e-4; 30,000 training updates.</td>
-                  <td rowspan="2" style="vertical-align: middle;">Fixed 30k updates; losses typically converge by 10k updates.</td>
+                  <td rowspan="2" style="vertical-align: middle;">Fixed 30k updates; losses typically converge in the early stage.</td>
                 </tr>
                 <tr>
                   <td>Diffusion Policy</td>
@@ -1055,7 +1055,7 @@
                   <td>DiWA</td>
                   <td>230 trajectories per task: 50 expert + 150 BC-policy + 30 random</td>
                   <td>Official DiWA defaults: DreamerV2 RSSM with deterministic dimension 1024, 32 x 32 categorical stochastic latent and hidden dimension 1000; world-model sequence length 50, batch size 50, AdamW learning rate 3e-4, weight decay 0.05; policy horizon 4, 20 denoising steps (10 fine-tuned); PPO with 50 parallel environments, 36 rollout steps, actor/critic learning rates 1e-5/1e-3, batch size 7,500, and 10 update epochs.</td>
-                  <td rowspan="3" style="vertical-align: middle;">Stop when world-model SR converges or declines; test the top-5 checkpoints in the actual environment and retain the best per seed.</td>
+                  <td rowspan="2" style="vertical-align: middle;">Stop when world-model SR converges or declines; test the top-5 checkpoints in the actual environment and retain the best per seed.</td>
                 </tr>
                 <tr>
                   <td>TD-MPC2</td>
@@ -1065,7 +1065,8 @@
                 <tr>
                   <td>World4RL</td>
                   <td>230 trajectories per task: 50 expert + 150 BC-policy + 30 random</td>
-                  <td>PPO actor/encoder learning rate 1e-6, rollout horizon 15, batch size 64 initial states, mini-batch size 64, 6 PPO epochs, up to 2,000 actor updates, log-std upper clip -2 (std <= exp(-2)).</td>
+                  <td>PPO actor/encoder learning rate 1e-6, rollout horizon 15, batch size 64 initial states, mini-batch size 64, 6 PPO epochs per rollout batch, 1M world-model environment interactions, and log-standard-deviation upper bound 0 (std &le; exp(0) = 1).</td>
+                  <td>Run for 1M world-model interactions; test the top-5 checkpoints ranked by world-model success rate in the actual environment and retain the best per seed.</td>
                 </tr>
               </tbody>
             </table>
